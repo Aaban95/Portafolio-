@@ -372,6 +372,22 @@ select option{background:var(--surface2)}
 .btn-conf-cancel{flex:1;padding:.75rem;background:transparent;border:1px solid var(--border2);color:var(--text2);font-family:var(--mono);font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;cursor:pointer;border-radius:2px;transition:all .18s}
 .btn-conf-cancel:hover{border-color:var(--text);color:var(--text)}
 
+/* ── VERSION MEDIA SEGMENTS ── */
+.ver-seg{margin-bottom:1.8rem}
+.ver-seg-hdr{display:flex;align-items:center;justify-content:space-between;gap:.8rem;margin-bottom:.9rem;padding-bottom:.6rem;border-bottom:1px solid var(--border)}
+.ver-seg-label{font-family:var(--cond);font-weight:700;font-size:1.15rem;letter-spacing:.1em;text-transform:uppercase;color:var(--accent)}
+.ver-seg-desc{font-family:var(--mono);font-size:.6rem;letter-spacing:.12em;color:var(--text2);flex:1}
+.ver-seg-acts{display:flex;gap:.4rem;align-items:center;flex-shrink:0}
+.ver-seg-add{display:inline-flex;align-items:center;gap:.35rem;padding:.28rem .65rem;background:transparent;border:1px solid var(--border2);color:var(--text2);font-family:var(--mono);font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;border-radius:2px;transition:all .18s}
+.ver-seg-add:hover{border-color:var(--accent);color:var(--accent)}
+.ver-seg-del{background:none;border:none;color:var(--text3);cursor:pointer;font-family:var(--mono);font-size:.55rem;letter-spacing:.1em;text-transform:uppercase;padding:.28rem .5rem;transition:color .18s}
+.ver-seg-del:hover{color:#e06060}
+.ver-segs-wrap{display:flex;flex-direction:column;gap:0}
+.add-ver-btn{display:inline-flex;align-items:center;gap:.5rem;padding:.55rem 1.2rem;background:rgba(232,160,32,.05);border:1px dashed var(--accent2);color:var(--accent);font-family:var(--mono);font-size:.65rem;letter-spacing:.15em;text-transform:uppercase;cursor:pointer;border-radius:2px;transition:all .2s;margin-top:.5rem}
+.add-ver-btn:hover{background:rgba(232,160,32,.1);border-style:solid}
+.media-menu-ver{position:absolute;top:100%;left:0;z-index:200;background:var(--surface2);border:1px solid var(--border2);border-radius:2px;min-width:210px;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,.5);display:none}
+.media-menu-ver.open{display:block}
+
 /* ── LIGHTBOX / VIDEO ── */
 #lightbox,#video-modal{display:none;position:fixed;inset:0;z-index:3000;background:rgba(4,8,12,.97);align-items:center;justify-content:center;padding:2rem;backdrop-filter:blur(8px)}
 #lightbox.open,#video-modal.open{display:flex;animation:mOIn .2s ease}
@@ -871,9 +887,9 @@ const NAV_DEF = [
   {id:'extra',label:'Extra',system:true,isExtra:true},
 ];
 const PROJ_DEF = [
-  {id:1,title:"Pneumatic Engine",short:"Multi-version air-powered engine — pressure, sealing, and valve timing improvements across 3 versions.",status:"iterating",category:"Pneumatics",tags:["pneumatics","engine","pressure"],ov:"A working engine powered by compressed air rather than combustion. Objective: understand piston mechanics, valve timing, and pressure-to-torque conversion. Built across 3 versions with documented performance gains each iteration.",des:"Key decisions: piston-to-bore clearance (initially 0.5 mm — caused air bleed-by), valve timing cam geometry, and material selection. Main challenge was sealing. Constraints: hand-fabricated parts, 3D printed non-load-bearing components (PLA, 0.4 mm nozzle).",tst:"V1: Engine rotated freely under air but stalled under any load. Inlet pressure tested at 2–6 bar. V2: PTFE piston rings added — RPM increased 40% under identical inlet pressure. V3: Valve cam revised, timing advanced 8°.",itr:"V1 — Baseline. 0.5 mm piston clearance, significant air loss.\nV2 — PTFE rings fitted. Reduced leakage, +40% RPM at 4 bar.\nV3 — Revised valve cam, 8° timing advance.\nPlanned V4 — Two-cylinder opposed layout.",files:[{name:"engine_v3.stl",size:"2.4 MB",type:"stl"},{name:"test_data.xlsx",size:"38 KB",type:"data"}],media:[],notes:[]},
-  {id:2,title:"RC Car Aero Kit",short:"Wing, splitter, and diffuser package for 1/10 RC car — drag vs. downforce analysis.",status:"iterating",category:"Aerodynamics",tags:["aerodynamics","downforce","wing","rc"],ov:"Full aerodynamic package for a 1/10 scale RC car. Objectives: reduce drag, increase grip through downforce, understand the aero trade-offs full-scale teams manage.",des:"Wing angle tested at 5°, 10°, and 15°. Designed in Onshape, printed in PLA. Diffuser designed to manage underbody airflow. Constraint: must mount within standard RC body shell mounting points.",tst:"Straight-line speed tested over a measured 20 m course (average of 5 runs). Wing at 10° produced best lap time vs. no wing. 15° improved cornering but reduced top speed ~4%.",itr:"V1 — Flat endplate wing, no front aero. High drag.\nV2 — Curved endplates, 10° wing. Balanced performance.\nV3 (current) — Front splitter, rear diffuser. Best cornering yet.\nPlanned — Full undertray.",files:[{name:"rear_wing_v3.stl",size:"1.1 MB",type:"stl"},{name:"lap_data.xlsx",size:"24 KB",type:"data"}],media:[],notes:[]},
-  {id:3,title:"Water Rocket",short:"Compressed-air water rocket optimised for altitude and stability — competition entry, 3rd place.",status:"complete",category:"Propulsion",tags:["rocket","propulsion","competition"],ov:"A water-propelled rocket using compressed air. Entered in school engineering competition. Objective: maximum altitude with stable flight. Required analysis of pressure, thrust, drag, and stability margin.",des:"Fin geometry determined by stability analysis — centre of pressure must stay behind centre of mass. Water fill ratio optimised through test launches: 35% gave best thrust. PET bottle rated to 8 bar, used at max 7 bar.",tst:"Launch angles 70°, 80°, 90°. Pressure 4–7 bar. Best altitude at 6 bar, 80° launch. Stability confirmed across all tests. Video used for trajectory analysis.",itr:"Mk1 — Unstable at high pressure. Fins too small.\nMk2 — Fins enlarged 30%. Stable but high drag.\nMk3 (competition) — Optimised fin taper, water volume. Best performance.\nProject complete.",files:[{name:"rocket_mk3.stl",size:"890 KB",type:"stl"},{name:"flight_data.xlsx",size:"18 KB",type:"data"}],media:[],notes:[]}
+  {id:1,title:"Pneumatic Engine",short:"Multi-version air-powered engine — pressure, sealing, and valve timing improvements across 3 versions.",status:"iterating",category:"Pneumatics",tags:["pneumatics","engine","pressure"],ov:"A working engine powered by compressed air rather than combustion. Objective: understand piston mechanics, valve timing, and pressure-to-torque conversion. Built across 3 versions with documented performance gains each iteration.",des:"Key decisions: piston-to-bore clearance (initially 0.5 mm — caused air bleed-by), valve timing cam geometry, and material selection. Main challenge was sealing. Constraints: hand-fabricated parts, 3D printed non-load-bearing components (PLA, 0.4 mm nozzle).",tst:"V1: Engine rotated freely under air but stalled under any load. Inlet pressure tested at 2–6 bar. V2: PTFE piston rings added — RPM increased 40% under identical inlet pressure. V3: Valve cam revised, timing advanced 8°.",itr:"V1 — Baseline. 0.5 mm piston clearance, significant air loss.\nV2 — PTFE rings fitted. Reduced leakage, +40% RPM at 4 bar.\nV3 — Revised valve cam, 8° timing advance.\nPlanned V4 — Two-cylinder opposed layout.",files:[{name:"engine_v3.stl",size:"2.4 MB",type:"stl"},{name:"test_data.xlsx",size:"38 KB",type:"data"}],media:[],notes:[],verSegs:[{id:'vs-1-1',label:'V1',desc:'Baseline — 0.5 mm piston clearance',media:[]},{id:'vs-1-2',label:'V2',desc:'PTFE rings — +40% RPM at 4 bar',media:[]},{id:'vs-1-3',label:'V3',desc:'Revised valve cam, 8° timing advance',media:[]}]},
+  {id:2,title:"RC Car Aero Kit",short:"Wing, splitter, and diffuser package for 1/10 RC car — drag vs. downforce analysis.",status:"iterating",category:"Aerodynamics",tags:["aerodynamics","downforce","wing","rc"],ov:"Full aerodynamic package for a 1/10 scale RC car. Objectives: reduce drag, increase grip through downforce, understand the aero trade-offs full-scale teams manage.",des:"Wing angle tested at 5°, 10°, and 15°. Designed in Onshape, printed in PLA. Diffuser designed to manage underbody airflow. Constraint: must mount within standard RC body shell mounting points.",tst:"Straight-line speed tested over a measured 20 m course (average of 5 runs). Wing at 10° produced best lap time vs. no wing. 15° improved cornering but reduced top speed ~4%.",itr:"V1 — Flat endplate wing, no front aero. High drag.\nV2 — Curved endplates, 10° wing. Balanced performance.\nV3 (current) — Front splitter, rear diffuser. Best cornering yet.\nPlanned — Full undertray.",files:[{name:"rear_wing_v3.stl",size:"1.1 MB",type:"stl"},{name:"lap_data.xlsx",size:"24 KB",type:"data"}],media:[],notes:[],verSegs:[{id:'vs-2-1',label:'V1',desc:'Flat endplate wing, no front aero',media:[]},{id:'vs-2-2',label:'V2',desc:'Curved endplates, 10° wing',media:[]},{id:'vs-2-3',label:'V3',desc:'Front splitter and rear diffuser',media:[]}]},
+  {id:3,title:"Water Rocket",short:"Compressed-air water rocket optimised for altitude and stability — competition entry, 3rd place.",status:"complete",category:"Propulsion",tags:["rocket","propulsion","competition"],ov:"A water-propelled rocket using compressed air. Entered in school engineering competition. Objective: maximum altitude with stable flight. Required analysis of pressure, thrust, drag, and stability margin.",des:"Fin geometry determined by stability analysis — centre of pressure must stay behind centre of mass. Water fill ratio optimised through test launches: 35% gave best thrust. PET bottle rated to 8 bar, used at max 7 bar.",tst:"Launch angles 70°, 80°, 90°. Pressure 4–7 bar. Best altitude at 6 bar, 80° launch. Stability confirmed across all tests. Video used for trajectory analysis.",itr:"Mk1 — Unstable at high pressure. Fins too small.\nMk2 — Fins enlarged 30%. Stable but high drag.\nMk3 (competition) — Optimised fin taper, water volume. Best performance.\nProject complete.",files:[{name:"rocket_mk3.stl",size:"890 KB",type:"stl"},{name:"flight_data.xlsx",size:"18 KB",type:"data"}],media:[],notes:[],verSegs:[{id:'vs-3-1',label:'Mk1',desc:'Unstable at high pressure',media:[]},{id:'vs-3-2',label:'Mk2',desc:'Enlarged fins, stable flight',media:[]},{id:'vs-3-3',label:'Mk3',desc:'Competition build — best performance',media:[]}]}
 ];
 const COMP_DEF = [{id:1,year:2025,name:"Water Rocket Competition",project:"Water Rocket Mk3",result:"3rd Place",learning:"Stability margin analysis directly shaped fin sizing — a principle now applied to every aero project."}];
 const ETABS_DEF = [{id:'et-all',name:'All',system:true},{id:'et-exp',name:'Experiments',desc:'Quick experiments'},{id:'et-elec',name:'Electronics',desc:'Electronics & circuits'}];
@@ -896,7 +912,11 @@ let extraCards   = ls('pf_ecards')   || JSON.parse(JSON.stringify(ECARDS_DEF));
 let extraVers    = ls('pf_evers')    || {};
 
 // migrate old data
-projects.forEach(p=>{if(!p.media)p.media=[];if(!p.notes)p.notes=[];});
+projects.forEach(p=>{
+  if(!p.media)p.media=[];
+  if(!p.notes)p.notes=[];
+  if(!p.verSegs)p.verSegs=[];
+});
 extraCards.forEach(c=>{if(!c.tags)c.tags=[];});
 
 let editMode       = false;
@@ -1323,7 +1343,7 @@ function saveP(){
     const idx=projects.findIndex(p=>p.id===editingProjId);
     if(idx!==-1) projects[idx]={...projects[idx],...data};
   } else {
-    projects.push({id:projNextId++,...data,files:[],media:[],notes:[]});
+    projects.push({id:projNextId++,...data,files:[],media:[],notes:[],verSegs:[]});
   }
   saveAll(); closeM('m-proj'); renderProj(); renderHome();
   if(editingProjId!==null&&currentDetailId===editingProjId) renderDet(editingProjId);
@@ -1341,13 +1361,26 @@ function renderDet(id){
   const p=projects.find(x=>x.id===id); if(!p){NAV('proj');return;}
   const iblks=(p.itr||'').split('\n').filter(Boolean).map(l=>{const[lb,...r]=l.split('—');return`<div class="ver-block"><div class="ver-lbl">${esc((lb||'').trim())}</div><p>${esc((r.join('—')||'').trim())}</p></div>`;}).join('');
   const fitems=(p.files||[]).map(f=>`<div class="f-item" onclick="alert('Link your file: ${f.name}')"><div class="f-icon">${f.type==='stl'?'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>':'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>'}</div><div><div class="f-name">${esc(f.name)}</div><div class="f-size">${f.size}</div></div></div>`).join('');
-  const mitems=(p.media||[]).map((m,i)=>{
-    if(m.type==='photo') return `<div class="media-thumb" onclick="openLB('${m.data}')"><img src="${m.data}" alt=""><button class="m-del" onclick="event.stopPropagation();delMedia(${id},${i})">✕</button></div>`;
-    if(m.type==='video') return `<div class="media-thumb is-video"><div class="video-ph"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="5 3 19 12 5 21"/></svg><span>${esc(m.label||'Video')}</span></div><div class="play-ov" onclick="playLocal('${m.data}')"><button class="play-btn"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21"/></svg></button></div><button class="m-del" onclick="event.stopPropagation();delMedia(${id},${i})">✕</button></div>`;
-    if(m.type==='video-url') return `<div class="media-thumb is-video"><div class="video-ph"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="5 3 19 12 5 21 5 3"/></svg><span>${esc(m.label||'Video')}</span></div><div class="play-ov" onclick="playURL('${encodeURIComponent(m.url)}')"><button class="play-btn"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21"/></svg></button></div><button class="m-del" onclick="event.stopPropagation();delMedia(${id},${i})">✕</button></div>`;
-    return '';
-  }).join('');
   const noteItems=(p.notes||[]).length===0?`<div class="notes-empty">No notes yet</div>`:(p.notes||[]).map((n,i)=>`<div class="note-item"><div class="note-body"><div class="note-text">${esc(n.text)}</div><div class="note-date">${n.date}</div></div><button class="note-del" onclick="delNote(${id},${i})"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>`).join('');
+
+  // Build versioned media segments HTML
+  const segs = (p.verSegs||[]);
+  const verSegsHTML = segs.length ? `
+    <div class="ver-segs-wrap" id="versegs-${id}">
+      ${segs.map(seg=>renderVerSeg(id,seg)).join('')}
+    </div>
+    ${editMode?`<button class="add-ver-btn" onclick="addVerSeg(${id})">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      Add Version Segment
+    </button>`:''}
+  ` : `
+    <p style="color:var(--text3);font-size:.85rem;font-style:italic;margin-bottom:.8rem">No version segments yet.</p>
+    ${editMode?`<button class="add-ver-btn" onclick="addVerSeg(${id})">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      Add Version Segment (e.g. V1, V2…)
+    </button>`:''}
+  `;
+
   document.getElementById('det-content').innerHTML=`
     <div class="d-hdr">
       <div class="eyebrow" style="margin-bottom:.4rem">${esc(p.category)}</div>
@@ -1355,9 +1388,6 @@ function renderDet(id){
       <div class="d-meta"><div class="status s-${p.status}"><div class="s-dot"></div><span class="s-label">${slbl(p.status)}</span></div>${p.tags.map(t=>`<span class="tag">${esc(t)}</span>`).join('')}</div>
       <div class="d-actions">
         <button class="btn-sm" onclick="openEditP(${id})"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>Edit</button>
-        <button class="btn-sm" onclick="triggerPhoto(${id})"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>Photo</button>
-        <button class="btn-sm" onclick="triggerVideo(${id})"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>Video</button>
-        <button class="btn-sm" onclick="openVideoURL(${id})"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg>Link</button>
         <button class="btn-danger" onclick="confirmDelP(${id})"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6M10 11v6M14 11v6M9 6V4h6v2"/></svg>Delete</button>
       </div>
     </div>
@@ -1365,19 +1395,10 @@ function renderDet(id){
     <div class="d-sec"><div class="d-sec-h">2. Design &amp; Development</div><p>${esc(p.des)||'<em style="color:var(--text3)">No design notes yet.</em>'}</p></div>
     <div class="d-sec"><div class="d-sec-h">3. Testing &amp; Results</div><p>${esc(p.tst)||'<em style="color:var(--text3)">No test data yet.</em>'}</p></div>
     <div class="d-sec"><div class="d-sec-h">4. Iterations</div>${iblks||'<p style="color:var(--text3)">No iteration notes yet.</p>'}</div>
-    <div class="d-sec"><div class="d-sec-h">5. Photos &amp; Videos</div>
-      <div class="media-gallery" id="mgal-${id}">
-        ${mitems}
-        <div class="media-add-btn" id="madd-${id}" onclick="toggleMediaMenu(${id})">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-          Add Media
-          <div class="media-menu" id="mmenu-${id}">
-            <div class="mm-item" onclick="event.stopPropagation();closeMenus();triggerPhoto(${id})">📷 Upload Photo</div>
-            <div class="mm-item" onclick="event.stopPropagation();closeMenus();triggerVideo(${id})">🎥 Upload Video (session)</div>
-            <div class="mm-item" onclick="event.stopPropagation();closeMenus();openVideoURL(${id})">🔗 YouTube / Video Link</div>
-          </div>
-        </div>
-      </div>
+    <div class="d-sec">
+      <div class="d-sec-h">5. Photos &amp; Videos by Version</div>
+      <p style="font-size:.82rem;color:var(--text2);margin-bottom:1.2rem">Each version has its own photo and video gallery — upload directly to the right iteration.</p>
+      ${verSegsHTML}
     </div>
     ${(p.files&&p.files.length)?`<div class="d-sec"><div class="d-sec-h">6. Files</div><p style="font-size:.82rem;color:var(--text2);margin-bottom:1rem">STL files for 0.4 mm nozzle.</p><div class="files-grid">${fitems}</div></div>`:''}
     <div class="d-sec"><div class="d-sec-h">Notes &amp; Extras</div>
@@ -1389,13 +1410,126 @@ function renderDet(id){
     </div>`;
 }
 
+// ── Version Segment helpers ──
+function renderVerSeg(projId, seg){
+  const mitems = (seg.media||[]).map((m,i)=>{
+    if(m.type==='photo') return `<div class="media-thumb" onclick="openLB('${m.data}')"><img src="${m.data}" alt=""><button class="m-del" onclick="event.stopPropagation();delVerMedia(${projId},'${seg.id}',${i})">✕</button></div>`;
+    if(m.type==='video') return `<div class="media-thumb is-video"><div class="video-ph"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="5 3 19 12 5 21"/></svg><span>${esc(m.label||'Video')}</span></div><div class="play-ov" onclick="playLocal('${m.data}')"><button class="play-btn"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21"/></svg></button></div><button class="m-del" onclick="event.stopPropagation();delVerMedia(${projId},'${seg.id}',${i})">✕</button></div>`;
+    if(m.type==='video-url') return `<div class="media-thumb is-video"><div class="video-ph"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="5 3 19 12 5 21 5 3"/></svg><span>${esc(m.label||'Video')}</span></div><div class="play-ov" onclick="playURL('${encodeURIComponent(m.url)}')"><button class="play-btn"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21"/></svg></button></div><button class="m-del" onclick="event.stopPropagation();delVerMedia(${projId},'${seg.id}',${i})">✕</button></div>`;
+    return '';
+  }).join('');
+
+  return `<div class="ver-seg" id="vs-${seg.id}">
+    <div class="ver-seg-hdr">
+      <span class="ver-seg-label">${esc(seg.label)}</span>
+      ${seg.desc?`<span class="ver-seg-desc">${esc(seg.desc)}</span>`:''}
+      <div class="ver-seg-acts">
+        ${editMode?`
+          <button class="ver-seg-add" onclick="triggerVerPhoto(${projId},'${seg.id}')">
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>Photo
+          </button>
+          <button class="ver-seg-add" onclick="triggerVerVideo(${projId},'${seg.id}')">
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>Video
+          </button>
+          <button class="ver-seg-add" onclick="openVerVideoURL(${projId},'${seg.id}')">
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg>Link
+          </button>
+          <button class="ver-seg-add" onclick="editVerSegLabel(${projId},'${seg.id}')">
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>Rename
+          </button>
+          <button class="ver-seg-del" onclick="delVerSeg(${projId},'${seg.id}')">✕ Remove</button>
+        `:''}
+      </div>
+    </div>
+    <div class="media-gallery" id="vgal-${seg.id}">
+      ${mitems}
+      ${!mitems && !editMode ? `<p style="font-family:var(--mono);font-size:.6rem;color:var(--text3);letter-spacing:.12em;text-transform:uppercase;padding:.5rem 0">No media yet for ${esc(seg.label)}</p>` : ''}
+    </div>
+  </div>`;
+}
+
+let verMediaTarget={projId:null,segId:null};
+function triggerVerPhoto(projId,segId){ verMediaTarget={projId,segId}; document.getElementById('proj-photo-inp').value=''; document.getElementById('proj-photo-inp').setAttribute('data-mode','ver'); document.getElementById('proj-photo-inp').click(); }
+function triggerVerVideo(projId,segId){ verMediaTarget={projId,segId}; document.getElementById('proj-video-inp').value=''; document.getElementById('proj-video-inp').setAttribute('data-mode','ver'); document.getElementById('proj-video-inp').click(); }
+function openVerVideoURL(projId,segId){ verMediaTarget={projId,segId}; mediaTarget=projId; document.getElementById('vu-url').value=''; document.getElementById('vu-label').value=''; document.getElementById('m-video-url').setAttribute('data-ver-seg',segId); document.getElementById('m-video-url').classList.add('open'); }
+function delVerMedia(projId,segId,idx){ const p=projects.find(x=>x.id===projId); if(!p) return; const seg=p.verSegs.find(s=>s.id===segId); if(!seg) return; seg.media.splice(idx,1); saveAll(); renderDet(projId); }
+function addVerSeg(projId){
+  const p=projects.find(x=>x.id===projId); if(!p) return;
+  const label=prompt('Version label (e.g. V1, V2, Mk3):','V'+(((p.verSegs||[]).length)+1));
+  if(!label) return;
+  const desc=prompt('Short description (optional):','') || '';
+  pushUndo();
+  if(!p.verSegs) p.verSegs=[];
+  p.verSegs.push({id:'vs-'+projId+'-'+Date.now(),label:label.trim(),desc:desc.trim(),media:[]});
+  saveAll(); renderDet(projId);
+}
+function delVerSeg(projId,segId){
+  const p=projects.find(x=>x.id===projId); if(!p) return;
+  if(!confirm('Remove this version segment and all its media?')) return;
+  pushUndo(); p.verSegs=(p.verSegs||[]).filter(s=>s.id!==segId); saveAll(); renderDet(projId);
+}
+function editVerSegLabel(projId,segId){
+  const p=projects.find(x=>x.id===projId); if(!p) return;
+  const seg=p.verSegs.find(s=>s.id===segId); if(!seg) return;
+  const label=prompt('Version label:',seg.label); if(!label) return;
+  const desc=prompt('Description:',seg.desc||'');
+  pushUndo(); seg.label=label.trim(); seg.desc=(desc||'').trim(); saveAll(); renderDet(projId);
+}
+
 // ── Media ──
-function triggerPhoto(id){ mediaTarget=id; document.getElementById('proj-photo-inp').value=''; document.getElementById('proj-photo-inp').click(); }
-function triggerVideo(id){ mediaTarget=id; document.getElementById('proj-video-inp').value=''; document.getElementById('proj-video-inp').click(); }
-function handlePhotoUpload(e){ const f=e.target.files[0]; if(!f) return; const r=new FileReader(); r.onload=ev=>{ const p=projects.find(x=>x.id===mediaTarget); if(!p) return; p.media.push({type:'photo',data:ev.target.result,label:'',date:nowStr()}); saveAll(); if(currentDetailId===mediaTarget)renderDet(mediaTarget); renderProj(); renderHome(); }; r.readAsDataURL(f); }
-function handleVideoUpload(e){ const f=e.target.files[0]; if(!f) return; if(!confirm('Video files are large and won\'t persist after closing. Use "Video Link" for YouTube instead. Continue?')) return; const url=URL.createObjectURL(f); const p=projects.find(x=>x.id===mediaTarget); if(!p) return; p.media.push({type:'video',data:url,label:f.name.replace(/\.[^.]+$/,''),date:nowStr()}); if(currentDetailId===mediaTarget)renderDet(mediaTarget); renderProj(); }
-function openVideoURL(id){ mediaTarget=id; document.getElementById('vu-url').value=''; document.getElementById('vu-label').value=''; document.getElementById('m-video-url').classList.add('open'); }
-function saveVideoURL(){ const url=document.getElementById('vu-url').value.trim(); if(!url){showToast('Enter a URL.','red');return;} const p=projects.find(x=>x.id===mediaTarget); if(!p) return; p.media.push({type:'video-url',url,label:document.getElementById('vu-label').value.trim()||'Video',date:nowStr()}); saveAll(); closeM('m-video-url'); if(currentDetailId===mediaTarget)renderDet(mediaTarget); renderProj(); }
+function triggerPhoto(id){ mediaTarget=id; document.getElementById('proj-photo-inp').value=''; document.getElementById('proj-photo-inp').removeAttribute('data-mode'); document.getElementById('proj-photo-inp').click(); }
+function triggerVideo(id){ mediaTarget=id; document.getElementById('proj-video-inp').value=''; document.getElementById('proj-video-inp').removeAttribute('data-mode'); document.getElementById('proj-video-inp').click(); }
+function handlePhotoUpload(e){
+  const f=e.target.files[0]; if(!f) return;
+  const isVer=document.getElementById('proj-photo-inp').getAttribute('data-mode')==='ver';
+  const r=new FileReader();
+  r.onload=ev=>{
+    if(isVer){
+      const {projId,segId}=verMediaTarget;
+      const p=projects.find(x=>x.id===projId); if(!p) return;
+      const seg=p.verSegs.find(s=>s.id===segId); if(!seg) return;
+      seg.media.push({type:'photo',data:ev.target.result,label:'',date:nowStr()});
+      saveAll(); renderDet(projId); renderProj(); renderHome();
+    } else {
+      const p=projects.find(x=>x.id===mediaTarget); if(!p) return;
+      p.media.push({type:'photo',data:ev.target.result,label:'',date:nowStr()});
+      saveAll(); if(currentDetailId===mediaTarget)renderDet(mediaTarget); renderProj(); renderHome();
+    }
+  };
+  r.readAsDataURL(f);
+}
+function handleVideoUpload(e){
+  const f=e.target.files[0]; if(!f) return;
+  if(!confirm('Video files are large and won\'t persist after closing. Use "Video Link" for YouTube instead. Continue?')) return;
+  const url=URL.createObjectURL(f);
+  const isVer=document.getElementById('proj-video-inp').getAttribute('data-mode')==='ver';
+  if(isVer){
+    const {projId,segId}=verMediaTarget;
+    const p=projects.find(x=>x.id===projId); if(!p) return;
+    const seg=p.verSegs.find(s=>s.id===segId); if(!seg) return;
+    seg.media.push({type:'video',data:url,label:f.name.replace(/\.[^.]+$/,''),date:nowStr()});
+    renderDet(projId); renderProj();
+  } else {
+    const p=projects.find(x=>x.id===mediaTarget); if(!p) return;
+    p.media.push({type:'video',data:url,label:f.name.replace(/\.[^.]+$/,''),date:nowStr()});
+    if(currentDetailId===mediaTarget)renderDet(mediaTarget); renderProj();
+  }
+}
+function openVideoURL(id){ mediaTarget=id; document.getElementById('vu-url').value=''; document.getElementById('vu-label').value=''; document.getElementById('m-video-url').removeAttribute('data-ver-seg'); document.getElementById('m-video-url').classList.add('open'); }
+function saveVideoURL(){
+  const url=document.getElementById('vu-url').value.trim(); if(!url){showToast('Enter a URL.','red');return;}
+  const segId=document.getElementById('m-video-url').getAttribute('data-ver-seg');
+  if(segId){
+    const p=projects.find(x=>x.id===verMediaTarget.projId); if(!p) return;
+    const seg=p.verSegs.find(s=>s.id===segId); if(!seg) return;
+    seg.media.push({type:'video-url',url,label:document.getElementById('vu-label').value.trim()||'Video',date:nowStr()});
+    saveAll(); closeM('m-video-url'); renderDet(verMediaTarget.projId);
+  } else {
+    const p=projects.find(x=>x.id===mediaTarget); if(!p) return;
+    p.media.push({type:'video-url',url,label:document.getElementById('vu-label').value.trim()||'Video',date:nowStr()});
+    saveAll(); closeM('m-video-url'); if(currentDetailId===mediaTarget)renderDet(mediaTarget); renderProj();
+  }
+}
 function delMedia(projId,idx){ const p=projects.find(x=>x.id===projId); if(!p) return; p.media.splice(idx,1); saveAll(); renderDet(projId); renderProj(); renderHome(); }
 function toggleMediaMenu(id){ const m=document.getElementById('mmenu-'+id); if(!m) return; const open=m.classList.contains('open'); closeMenus(); if(!open) m.classList.add('open'); }
 function closeMenus(){ document.querySelectorAll('.media-menu.open').forEach(m=>m.classList.remove('open')); }
