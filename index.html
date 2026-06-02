@@ -603,7 +603,7 @@ footer{border-top:1px solid var(--border);padding:1.5rem 2.5rem;display:flex;jus
     <div class="divider"></div>
     <div class="proj-controls reveal">
       <div style="font-family:var(--mono);font-size:.63rem;color:var(--text3);letter-spacing:.15em;text-transform:uppercase" id="pcl">—</div>
-      <button class="btn-sm" onclick="openAddP()"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>Add Project</button>
+      <button class="btn-sm admin-only" id="btn-add-proj" style="display:none" onclick="openAddP()"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>Add Project</button>
     </div>
     <div class="proj-grid" id="proj-grid"></div>
   </div>
@@ -626,7 +626,7 @@ footer{border-top:1px solid var(--border);padding:1.5rem 2.5rem;display:flex;jus
     <div class="divider"></div>
     <div class="comp-list reveal" id="comp-list"></div>
     <div style="margin-top:1.5rem;text-align:right" class="reveal">
-      <button class="btn-sm" onclick="openAddC()"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>Add Competition</button>
+      <button class="btn-sm admin-only" id="btn-add-comp" style="display:none" onclick="openAddC()"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>Add Competition</button>
     </div>
   </div>
 </div>
@@ -647,12 +647,12 @@ footer{border-top:1px solid var(--border);padding:1.5rem 2.5rem;display:flex;jus
         </div>
       </div>
       <div class="reveal delay-2">
-        <div class="photo-box" id="about-photo-box" onclick="document.getElementById('about-photo-inp').click()" title="Upload photo">
+        <div class="photo-box" id="about-photo-box" onclick="if(editMode)document.getElementById('about-photo-inp').click()" title="Upload photo (admin only)">
           <div id="about-photo-inner" style="display:flex;flex-direction:column;align-items:center;gap:.8rem">
             <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" style="opacity:.15"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
-            <span>Add Your Photo</span>
+            <span id="photo-placeholder-txt" style="display:none"></span>
           </div>
-          <div class="photo-box-ov"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg><span>Change Photo</span></div>
+          <div class="photo-box-ov" id="photo-box-ov" style="display:none"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg><span>Change Photo</span></div>
         </div>
         <input type="file" id="about-photo-inp" accept="image/*" style="display:none" onchange="uploadAboutPhoto(event)">
       </div>
@@ -1052,6 +1052,12 @@ function enterEditMode(){
   document.getElementById('edit-badge').style.display='flex';
   const h=document.getElementById('extra-edit-hint');
   if(h) h.style.display='block';
+  // show all admin-only elements
+  document.querySelectorAll('.admin-only').forEach(el=>el.style.display='');
+  // show photo box overlay and placeholder
+  const pov=document.getElementById('photo-box-ov'); if(pov) pov.style.display='';
+  const ptxt=document.getElementById('photo-placeholder-txt'); if(ptxt){ptxt.textContent='Add Your Photo';ptxt.style.display='';}
+  const pbox=document.getElementById('about-photo-box'); if(pbox) pbox.style.cursor='pointer';
   refreshUndoBtns();
   populateSbContent();
   populateSbTheme();
@@ -1070,6 +1076,12 @@ function exitEditMode(){
   document.getElementById('edit-badge').style.display='none';
   const h=document.getElementById('extra-edit-hint');
   if(h) h.style.display='none';
+  // hide all admin-only elements
+  document.querySelectorAll('.admin-only').forEach(el=>el.style.display='none');
+  // hide photo box overlay and placeholder
+  const pov=document.getElementById('photo-box-ov'); if(pov) pov.style.display='none';
+  const ptxt=document.getElementById('photo-placeholder-txt'); if(ptxt) ptxt.style.display='none';
+  const pbox=document.getElementById('about-photo-box'); if(pbox) pbox.style.cursor='default';
   commitInlineEdit();
   hideITB();
   if(document.querySelector('#page-extra.active')) renderExtraPage();
@@ -1361,7 +1373,7 @@ function renderDet(id){
   const p=projects.find(x=>x.id===id); if(!p){NAV('proj');return;}
   const iblks=(p.itr||'').split('\n').filter(Boolean).map(l=>{const[lb,...r]=l.split('—');return`<div class="ver-block"><div class="ver-lbl">${esc((lb||'').trim())}</div><p>${esc((r.join('—')||'').trim())}</p></div>`;}).join('');
   const fitems=(p.files||[]).map(f=>`<div class="f-item" onclick="alert('Link your file: ${f.name}')"><div class="f-icon">${f.type==='stl'?'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>':'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>'}</div><div><div class="f-name">${esc(f.name)}</div><div class="f-size">${f.size}</div></div></div>`).join('');
-  const noteItems=(p.notes||[]).length===0?`<div class="notes-empty">No notes yet</div>`:(p.notes||[]).map((n,i)=>`<div class="note-item"><div class="note-body"><div class="note-text">${esc(n.text)}</div><div class="note-date">${n.date}</div></div><button class="note-del" onclick="delNote(${id},${i})"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>`).join('');
+  const noteItems=(p.notes||[]).length===0?`<div class="notes-empty">No notes yet</div>`:(p.notes||[]).map((n,i)=>`<div class="note-item"><div class="note-body"><div class="note-text">${esc(n.text)}</div><div class="note-date">${n.date}</div></div>${editMode?`<button class="note-del" onclick="delNote(${id},${i})"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>`:''}</div>`).join('');
 
   // Build versioned media segments HTML
   const segs = (p.verSegs||[]);
@@ -1387,8 +1399,10 @@ function renderDet(id){
       <div class="d-title">${esc(p.title)}</div>
       <div class="d-meta"><div class="status s-${p.status}"><div class="s-dot"></div><span class="s-label">${slbl(p.status)}</span></div>${p.tags.map(t=>`<span class="tag">${esc(t)}</span>`).join('')}</div>
       <div class="d-actions">
+        ${editMode?`
         <button class="btn-sm" onclick="openEditP(${id})"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>Edit</button>
         <button class="btn-danger" onclick="confirmDelP(${id})"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6M10 11v6M14 11v6M9 6V4h6v2"/></svg>Delete</button>
+        `:''}
       </div>
     </div>
     <div class="d-sec"><div class="d-sec-h">1. Overview</div><p>${esc(p.ov)||'<em style="color:var(--text3)">Click Edit to add overview.</em>'}</p></div>
@@ -1405,7 +1419,7 @@ function renderDet(id){
       <p style="font-size:.82rem;color:var(--text2);margin-bottom:1rem">Quick notes, links, or observations.</p>
       <div class="notes-area">
         <div id="nb-${id}">${noteItems}</div>
-        <div class="note-add-row"><input id="ni-${id}" placeholder="Add a note…" onkeydown="if(event.key==='Enter')addNote(${id})"><button class="note-submit" onclick="addNote(${id})">Add</button></div>
+        ${editMode?`<div class="note-add-row"><input id="ni-${id}" placeholder="Add a note…" onkeydown="if(event.key==='Enter')addNote(${id})"><button class="note-submit" onclick="addNote(${id})">Add</button></div>`:''}
       </div>
     </div>`;
 }
@@ -1543,7 +1557,7 @@ function closeVM(){ document.getElementById('video-modal').classList.remove('ope
 // ── Notes ──
 function addNote(projId){ const inp=document.getElementById('ni-'+projId); const txt=inp.value.trim(); if(!txt) return; const p=projects.find(x=>x.id===projId); if(!p) return; p.notes.push({text:txt,date:nowStr()}); saveAll(); inp.value=''; renderNotesBody(projId); }
 function delNote(projId,idx){ const p=projects.find(x=>x.id===projId); if(!p) return; p.notes.splice(idx,1); saveAll(); renderNotesBody(projId); }
-function renderNotesBody(projId){ const el=document.getElementById('nb-'+projId); if(!el) return; const p=projects.find(x=>x.id===projId); el.innerHTML=p.notes.length===0?`<div class="notes-empty">No notes yet</div>`:p.notes.map((n,i)=>`<div class="note-item"><div class="note-body"><div class="note-text">${esc(n.text)}</div><div class="note-date">${n.date}</div></div><button class="note-del" onclick="delNote(${projId},${i})"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>`).join(''); }
+function renderNotesBody(projId){ const el=document.getElementById('nb-'+projId); if(!el) return; const p=projects.find(x=>x.id===projId); el.innerHTML=p.notes.length===0?`<div class="notes-empty">No notes yet</div>`:p.notes.map((n,i)=>`<div class="note-item"><div class="note-body"><div class="note-text">${esc(n.text)}</div><div class="note-date">${n.date}</div></div>${editMode?`<button class="note-del" onclick="delNote(${projId},${i})"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>`:''}</div>`).join(''); }
 
 // ═══════════════════════════════════════════
 // COMPETITIONS
@@ -1555,7 +1569,7 @@ function renderComp(){
     <div class="comp-item">
       <div class="comp-yr">${c.year}</div>
       <div><div class="comp-ev">${esc(c.name)}</div><div class="comp-proj">Project: ${esc(c.project)}</div><div class="comp-learn">"${esc(c.learning)}"</div></div>
-      <div class="comp-r"><div class="comp-res">${esc(c.result)}</div><button class="btn-danger" style="justify-content:flex-end;margin-top:.5rem" onclick="confirmDelC(${c.id})"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/></svg>Remove</button></div>
+      <div class="comp-r"><div class="comp-res">${esc(c.result)}</div>${editMode?`<button class="btn-danger" style="justify-content:flex-end;margin-top:.5rem" onclick="confirmDelC(${c.id})"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/></svg>Remove</button>`:''}</div>
     </div>`).join('');
 }
 function openAddC(){ ['nc-name','nc-year','nc-proj','nc-res','nc-lrn'].forEach(id=>document.getElementById(id).value=''); document.getElementById('m-comp').classList.add('open'); }
